@@ -128,7 +128,7 @@ module Paperclip
       def to_file style = default_style
         tmp_file = Tempfile.new("s3_data")
         tmp_file.binmode
-        tmp_file.write(s3_bucket.key(path(style)).data)
+        tmp_file.write(AWS::S3::S3Object.value(path(style), bucket_name))
         tmp_file.rewind
         @queued_for_write[style] || tmp_file
       end
